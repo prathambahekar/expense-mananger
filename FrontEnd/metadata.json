@@ -1,0 +1,5 @@
+{
+  "name": "CosmicSplit",
+  "description": "A frontend-only, responsive React web application for a group expense tracker named CosmicSplit. It features a cosmic/space-inspired theme, dummy authentication, a dashboard, and several feature pages, all built with modern UI/UX principles, TailwindCSS, and Framer Motion for smooth animations.",
+  "requestFramePermissions": []
+}
