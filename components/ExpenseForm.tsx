@@ -153,6 +153,17 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ expense, onSubmit }) => {
                         </div>
                     );
                 })}
+                {fields.length < mockUsers.length ? (
+                    <button
+                        type="button"
+                        onClick={() => append({ userId: '', share: 0 })}
+                        className="mt-2 px-6 py-2 rounded-lg bg-[var(--color-primary-accent)] text-[var(--color-background)] font-semibold shadow hover:bg-[var(--color-secondary-accent)] transition-colors duration-150 flex items-center gap-2"
+                    >
+                        <FiPlus style={{ fontSize: 18 }} /> Add More People
+                    </button>
+                ) : (
+                    <div className="mt-2 text-sm text-gray-400">All people have been added.</div>
+                )}
                 <div className="mt-4 text-sm text-gray-400">Total amount to split: {watchAmount}</div>
             </MotionDiv>
 
