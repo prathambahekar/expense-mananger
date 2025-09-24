@@ -26,5 +26,10 @@ export function createServer() {
   app.post("/api/auth/login", login);
   app.get("/api/dashboard/:userId", getDashboard);
 
+  // Groups
+  app.get("/api/groups/:userId", (await import("./routes/groups")).listGroups);
+  app.post("/api/groups", (await import("./routes/groups")).createGroup);
+  app.put("/api/groups/:groupId/join", (await import("./routes/groups")).joinGroup);
+
   return app;
 }

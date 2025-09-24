@@ -38,3 +38,10 @@ export function getUser<T = any>(): T | null {
   const v = localStorage.getItem("sem_user");
   return v ? (JSON.parse(v) as T) : null;
 }
+
+export function getDefaultCurrency() {
+  return localStorage.getItem("sem_default_currency") || "USD";
+}
+export function setDefaultCurrency(cur: string) {
+  localStorage.setItem("sem_default_currency", cur);
+}
