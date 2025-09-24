@@ -106,9 +106,22 @@
 
   body {
     @apply bg-background text-foreground;
-    background-image: radial-gradient(1000px 600px at 10% -10%, rgba(99,102,241,0.2), transparent 60%),
-      radial-gradient(800px 500px at 110% 10%, rgba(16,185,129,0.2), transparent 60%),
-      radial-gradient(1200px 700px at 50% 120%, rgba(59,130,246,0.15), transparent 60%);
+    background-image:
+      radial-gradient(
+        1000px 600px at 10% -10%,
+        rgba(99, 102, 241, 0.2),
+        transparent 60%
+      ),
+      radial-gradient(
+        800px 500px at 110% 10%,
+        rgba(16, 185, 129, 0.2),
+        transparent 60%
+      ),
+      radial-gradient(
+        1200px 700px at 50% 120%,
+        rgba(59, 130, 246, 0.15),
+        transparent 60%
+      );
     background-attachment: fixed;
   }
 }
