@@ -4,6 +4,7 @@ import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { register, login } from "./routes/auth";
 import { getDashboard } from "./routes/dashboard";
+import { listGroups, createGroup, joinGroup } from "./routes/groups";
 
 export function createServer() {
   const app = express();
@@ -27,9 +28,9 @@ export function createServer() {
   app.get("/api/dashboard/:userId", getDashboard);
 
   // Groups
-  app.get("/api/groups/:userId", (await import("./routes/groups")).listGroups);
-  app.post("/api/groups", (await import("./routes/groups")).createGroup);
-  app.put("/api/groups/:groupId/join", (await import("./routes/groups")).joinGroup);
+  app.get("/api/groups/:userId", listGroups);
+  app.post("/api/groups", createGroup);
+  app.put("/api/groups/:groupId/join", joinGroup);
 
   return app;
 }
