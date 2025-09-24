@@ -7,6 +7,11 @@ import { SpendingChart } from "./components/spending-chart";
 import { BudgetTracker } from "./components/budget-tracker";
 import { Notifications } from "./components/notifications";
 import { Settings } from "./components/settings";
+import { GroupManagement, Group, GroupExpense } from "./components/group-management";
+import { GroupExpenses } from "./components/group-expenses";
+import { CurrencyConverter } from "./components/currency-converter";
+import { FairSplitCalculator } from "./components/fair-split-calculator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner@2.0.3";
 
@@ -28,6 +33,8 @@ export default function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [expenses, setExpenses] = useState<Expense[]>(initialExpenses);
   const [budget, setBudget] = useState(2000);
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [groupExpenses, setGroupExpenses] = useState<GroupExpense[]>([]);
 
   const addExpense = (newExpense: Omit<Expense, 'id'>) => {
     const expense: Expense = {
@@ -69,6 +76,23 @@ export default function App() {
   const handleClearData = () => {
     setExpenses([]);
     setBudget(2000);
+  };
+
+  const handleCreateGroup = (group: Omit<Group, 'id' | 'createdAt'>) => {
+    const newGroup: Group = {
+      ...group,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString()
+    };
+    setGroups(prev => [...prev, newGroup]);
+  };
+
+  const handleAddGroupExpense = (expense: Omit<GroupExpense, 'id'>) => {
+    const newExpense: GroupExpense = {
+      ...expense,
+      id: Date.now().toString()
+    };
+    setGroupExpenses(prev => [...prev, newExpense]);
   };
 
   // Calculate dashboard metrics
@@ -164,6 +188,46 @@ export default function App() {
           </div>
         );
       
+      case "groups":
+        return (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-3xl font-bold">Group Expenses</h1>
+                <p className="text-muted-foreground">AI-powered group expense management with fraud detection and fair splits.</p>
+              </div>
+              <Notifications expenses={expenses} budget={budget} />
+            </div>
+            <Tabs defaultValue="expenses" className="space-y-6">
+              <TabsList>
+                <TabsTrigger value="expenses">Group Expenses</TabsTrigger>
+                <TabsTrigger value="management">Manage Groups</TabsTrigger>
+                <TabsTrigger value="calculator">Fair Split</TabsTrigger>
+                <TabsTrigger value="currency">Currency</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="expenses">
+                <GroupExpenses 
+                  groups={groups} 
+                  onAddExpense={handleAddGroupExpense}
+                />
+              </TabsContent>
+              
+              <TabsContent value="management">
+                <GroupManagement onCreateGroup={handleCreateGroup} />
+              </TabsContent>
+              
+              <TabsContent value="calculator">
+                <FairSplitCalculator />
+              </TabsContent>
+              
+              <TabsContent value="currency">
+                <CurrencyConverter />
+              </TabsContent>
+            </Tabs>
+          </div>
+        );
+
       case "settings":
         return (
           <div className="space-y-6">

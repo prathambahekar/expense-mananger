@@ -7,16 +7,16 @@ import { Switch } from "./ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Separator } from "./ui/separator";
 import { Badge } from "./ui/badge";
-import {
-  User,
-  Bell,
-  Palette,
-  Download,
-  Upload,
-  Trash2,
-  Shield,
+import { 
+  User, 
+  Bell, 
+  Palette, 
+  Download, 
+  Upload, 
+  Trash2, 
+  Shield, 
   Globe,
-  // DollarSign removed for INR
+  DollarSign,
   Calendar,
   Moon,
   Sun
@@ -31,7 +31,7 @@ interface SettingsProps {
 
 export function Settings({ onExportData, onImportData, onClearData }: SettingsProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [currency, setCurrency] = useState("INR");
+  const [currency, setCurrency] = useState("USD");
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [budgetAlerts, setBudgetAlerts] = useState(true);
   const [expenseAlerts, setExpenseAlerts] = useState(true);
@@ -122,9 +122,9 @@ export function Settings({ onExportData, onImportData, onClearData }: SettingsPr
               onCheckedChange={handleThemeToggle}
             />
           </div>
-
+          
           <Separator />
-
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Currency</Label>
@@ -133,7 +133,7 @@ export function Settings({ onExportData, onImportData, onClearData }: SettingsPr
                   <SelectValue placeholder="Select currency" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="INR">INR (₹)</SelectItem>
+                  <SelectItem value="USD">USD ($)</SelectItem>
                   <SelectItem value="EUR">EUR (€)</SelectItem>
                   <SelectItem value="GBP">GBP (£)</SelectItem>
                   <SelectItem value="JPY">JPY (¥)</SelectItem>
@@ -141,7 +141,7 @@ export function Settings({ onExportData, onImportData, onClearData }: SettingsPr
                 </SelectContent>
               </Select>
             </div>
-
+            
             <div className="space-y-2">
               <Label>Date Format</Label>
               <Select value={dateFormat} onValueChange={setDateFormat}>
@@ -180,9 +180,9 @@ export function Settings({ onExportData, onImportData, onClearData }: SettingsPr
               onCheckedChange={setNotificationsEnabled}
             />
           </div>
-
+          
           <Separator />
-
+          
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label>Budget Alerts</Label>
@@ -196,12 +196,12 @@ export function Settings({ onExportData, onImportData, onClearData }: SettingsPr
               disabled={!notificationsEnabled}
             />
           </div>
-
+          
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label>Large Expense Alerts</Label>
               <p className="text-sm text-muted-foreground">
-                Get notified for expenses over ₹100
+                Get notified for expenses over $100
               </p>
             </div>
             <Switch
@@ -223,16 +223,16 @@ export function Settings({ onExportData, onImportData, onClearData }: SettingsPr
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button
-              variant="outline"
+            <Button 
+              variant="outline" 
               onClick={handleExportData}
               className="flex items-center gap-2"
             >
               <Download className="h-4 w-4" />
               Export Data
             </Button>
-
-            <Button
+            
+            <Button 
               variant="outline"
               className="flex items-center gap-2"
               onClick={() => {
@@ -261,8 +261,8 @@ export function Settings({ onExportData, onImportData, onClearData }: SettingsPr
               <Upload className="h-4 w-4" />
               Import Data
             </Button>
-
-            <Button
+            
+            <Button 
               variant="destructive"
               onClick={handleClearData}
               className="flex items-center gap-2"
@@ -271,10 +271,10 @@ export function Settings({ onExportData, onImportData, onClearData }: SettingsPr
               Clear All Data
             </Button>
           </div>
-
+          
           <div className="p-4 bg-muted rounded-lg">
             <p className="text-sm text-muted-foreground">
-              <strong>Note:</strong> Export your data regularly to keep a backup.
+              <strong>Note:</strong> Export your data regularly to keep a backup. 
               All data is stored locally in your browser.
             </p>
           </div>
@@ -306,7 +306,7 @@ export function Settings({ onExportData, onImportData, onClearData }: SettingsPr
                 </SelectContent>
               </Select>
             </div>
-
+            
             <div className="space-y-2">
               <Label>Time Zone</Label>
               <Select defaultValue="UTC-5">
@@ -344,9 +344,9 @@ export function Settings({ onExportData, onImportData, onClearData }: SettingsPr
             <span className="text-sm">Storage Used</span>
             <span className="text-sm text-muted-foreground">2.4 MB</span>
           </div>
-
+          
           <Separator />
-
+          
           <div className="space-y-2">
             <Button variant="outline" className="w-full">
               Privacy Policy

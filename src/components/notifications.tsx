@@ -4,7 +4,7 @@ import { Badge } from "./ui/badge";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { ScrollArea } from "./ui/scroll-area";
 import { Separator } from "./ui/separator";
-import { Bell, AlertTriangle, TrendingUp, CheckCircle, X } from "lucide-react";
+import { Bell, AlertTriangle, TrendingUp, DollarSign, CheckCircle, X } from "lucide-react";
 import { Expense } from "./expense-list";
 
 interface Notification {
@@ -29,13 +29,13 @@ export function Notifications({ expenses, budget }: NotificationsProps) {
   const generateNotifications = (): Notification[] => {
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
-
+    
     const monthlyExpenses = expenses
       .filter(expense => {
         const expenseDate = new Date(expense.date);
-        return expenseDate.getMonth() === currentMonth &&
-          expenseDate.getFullYear() === currentYear &&
-          expense.type === 'expense';
+        return expenseDate.getMonth() === currentMonth && 
+               expenseDate.getFullYear() === currentYear &&
+               expense.type === 'expense';
       })
       .reduce((sum, expense) => sum + expense.amount, 0);
 
@@ -48,7 +48,7 @@ export function Notifications({ expenses, budget }: NotificationsProps) {
         id: 'budget-exceeded',
         type: 'alert',
         title: 'Budget Exceeded',
-        message: `You've exceeded your monthly budget by ₹${(monthlyExpenses - budget).toFixed(2)}`,
+        message: `You've exceeded your monthly budget by $${(monthlyExpenses - budget).toFixed(2)}`,
         timestamp: new Date(),
         read: false
       });
@@ -77,7 +77,7 @@ export function Notifications({ expenses, budget }: NotificationsProps) {
         id: `large-expense-${expense.id}`,
         type: 'warning',
         title: 'Large Expense Alert',
-        message: `${expense.description}: ₹${expense.amount.toFixed(2)}`,
+        message: `${expense.description}: $${expense.amount.toFixed(2)}`,
         timestamp: new Date(expense.date),
         read: false
       });
@@ -97,7 +97,7 @@ export function Notifications({ expenses, budget }: NotificationsProps) {
         id: `income-${income.id}`,
         type: 'success',
         title: 'Income Received',
-        message: `${income.description}: +₹${income.amount.toFixed(2)}`,
+        message: `${income.description}: +$${income.amount.toFixed(2)}`,
         timestamp: new Date(income.date),
         read: false
       });
@@ -106,13 +106,13 @@ export function Notifications({ expenses, budget }: NotificationsProps) {
     // Monthly summary (if it's the end of the month)
     const today = new Date();
     const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-
+    
     if (today.getDate() >= lastDayOfMonth - 2) {
       notifications.push({
         id: 'monthly-summary',
         type: 'info',
         title: 'Monthly Summary',
-        message: `Total spent this month: ₹${monthlyExpenses.toFixed(2)}`,
+        message: `Total spent this month: $${monthlyExpenses.toFixed(2)}`,
         timestamp: new Date(),
         read: false
       });
@@ -125,7 +125,7 @@ export function Notifications({ expenses, budget }: NotificationsProps) {
   const unreadCount = currentNotifications.filter(n => !n.read).length;
 
   const markAsRead = (notificationId: string) => {
-    setNotifications(prev =>
+    setNotifications(prev => 
       prev.map(n => n.id === notificationId ? { ...n, read: true } : n)
     );
   };
@@ -173,7 +173,7 @@ export function Notifications({ expenses, budget }: NotificationsProps) {
         <Button variant="outline" size="icon" className="relative">
           <Bell className="h-4 w-4" />
           {unreadCount > 0 && (
-            <Badge
+            <Badge 
               className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-xs"
               variant="destructive"
             >
@@ -186,9 +186,9 @@ export function Notifications({ expenses, budget }: NotificationsProps) {
         <div className="flex items-center justify-between p-4 border-b">
           <h3 className="font-semibold">Notifications</h3>
           {unreadCount > 0 && (
-            <Button
-              variant="ghost"
-              size="sm"
+            <Button 
+              variant="ghost" 
+              size="sm" 
               onClick={markAllAsRead}
               className="text-xs"
             >
@@ -196,7 +196,7 @@ export function Notifications({ expenses, budget }: NotificationsProps) {
             </Button>
           )}
         </div>
-
+        
         <ScrollArea className="h-96">
           {currentNotifications.length === 0 ? (
             <div className="p-4 text-center text-muted-foreground">
@@ -207,9 +207,10 @@ export function Notifications({ expenses, budget }: NotificationsProps) {
             <div className="space-y-1">
               {currentNotifications.map((notification, index) => (
                 <div key={notification.id}>
-                  <div
-                    className={`p-4 hover:bg-muted/50 cursor-pointer transition-colors ${!notification.read ? 'bg-muted/30' : ''
-                      }`}
+                  <div 
+                    className={`p-4 hover:bg-muted/50 cursor-pointer transition-colors ${
+                      !notification.read ? 'bg-muted/30' : ''
+                    }`}
                     onClick={() => markAsRead(notification.id)}
                   >
                     <div className="flex items-start gap-3">
@@ -236,7 +237,7 @@ export function Notifications({ expenses, budget }: NotificationsProps) {
             </div>
           )}
         </ScrollArea>
-
+        
         {currentNotifications.length > 0 && (
           <div className="p-4 border-t">
             <Button variant="ghost" className="w-full" size="sm">

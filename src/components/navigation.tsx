@@ -14,6 +14,7 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
   const navItems = [
     { id: "dashboard", label: "Dashboard", icon: Home },
     { id: "transactions", label: "Transactions", icon: List },
+    { id: "groups", label: "Group Expenses", icon: PieChart },
     { id: "analytics", label: "Analytics", icon: BarChart3 },
     { id: "budget", label: "Budget", icon: Wallet },
     { id: "settings", label: "Settings", icon: Settings },
