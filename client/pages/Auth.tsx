@@ -93,7 +93,6 @@ export default function Auth() {
           </Tabs>
         </div>
       </div>
-      <ToastContainer position="top-right" autoClose={2500} theme="dark" />
     </div>
   );
 }
