@@ -1,14 +1,96 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello world project</title>
-  </head>
-
+    <title>Shared Expense Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-toastify@11.0.5/dist/ReactToastify.min.css" />
+    <style>
+      :root {
+        --color-background: #051027;
+        --color-primary-accent: #00FFD5;
+        --color-secondary-accent: #9B6CFF;
+        --color-danger: #FF6B6B;
+        --color-success: #4CAF50;
+        --color-text-primary: #FFFFFF;
+        --color-text-secondary: #a0aec0;
+        --font-body: 'Inter', sans-serif;
+        --font-heading: 'Space Grotesk', sans-serif;
+      }
+      body {
+        background-color: var(--color-background);
+        color: var(--color-text-primary);
+        font-family: var(--font-body);
+        overflow-x: hidden;
+      }
+      .cosmic-background {
+        background-image: url('/stars.svg');
+        background-repeat: repeat;
+        background-position: 0 0;
+        animation: move-stars 120s linear infinite;
+      }
+      @keyframes move-stars {
+        from { background-position: 0 0; }
+        to { background-position: -10000px 5000px; }
+      }
+      .gradient-text {
+        background: linear-gradient(90deg, var(--color-primary-accent), var(--color-secondary-accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+      }
+      .Toastify__toast {
+        background-color: #1a202c !important;
+        color: white !important;
+        border-radius: 12px !important;
+        border: 1px solid #4a5568 !important;
+      }
+      .Toastify__close-button {
+        color: white !important;
+      }
+      .Toastify__progress-bar {
+        background: linear-gradient(90deg, var(--color-primary-accent), var(--color-secondary-accent)) !important;
+      }
+      /* Fix for dropdown text visibility */
+      select {
+        color: var(--color-text-primary);
+      }
+      select option {
+        background: #0b193d; /* Match modal background for consistency */
+        color: var(--color-text-primary);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.1",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.19",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "axios": "https://aistudiocdn.com/axios@^1.12.2",
+    "react-toastify/": "https://aistudiocdn.com/react-toastify@^11.0.5/",
+    "react-toastify": "https://aistudiocdn.com/react-toastify@^11.0.5",
+    "@tanstack/react-query": "https://aistudiocdn.com/@tanstack/react-query@^5.90.2",
+    "react-hook-form": "https://aistudiocdn.com/react-hook-form@^7.63.0",
+    "react-icons/": "https://aistudiocdn.com/react-icons@^5.5.0/",
+    "yup": "https://aistudiocdn.com/yup@^1.7.1",
+    "react-chartjs-2": "https://aistudiocdn.com/react-chartjs-2@^5.3.0",
+    "@hookform/resolvers/": "https://aistudiocdn.com/@hookform/resolvers@^5.2.2/",
+    "chart.js": "https://aistudiocdn.com/chart.js@^4.5.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
   <body>
     <div id="root"></div>
-
-    <script type="module" src="/client/App.tsx"></script>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
