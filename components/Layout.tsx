@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FiHome, FiUsers, FiPlusCircle, FiTrendingUp, FiUser, FiLogOut, FiBell, FiMenu, FiX } from 'react-icons/fi';
+import { FiHome, FiUsers, FiPlusCircle, FiTrendingUp, FiUser, FiLogOut, FiBell, FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi';
+import { useTheme } from '../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
 
@@ -10,9 +11,13 @@ import { useAuth } from '../hooks/useAuth';
 const MotionDiv = motion.div;
 const MotionAside = motion.aside;
 
-const CosmicBackground: React.FC = () => (
-  <div className="absolute inset-0 w-full h-full cosmic-background z-0 opacity-40"></div>
-);
+const CosmicBackground: React.FC = () => {
+  const { theme } = useTheme();
+  return (
+    <div className={`absolute inset-0 w-full h-full cosmic-background z-0 ${theme === 'dark' ? 'opacity-40' : 'opacity-10'
+      }`}></div>
+  );
+};
 
 const navItems = [
   { name: 'Dashboard', path: '/dashboard', icon: FiHome },
@@ -23,9 +28,10 @@ const navItems = [
 
 const Header: React.FC<{ onMenuClick: () => void }> = ({ onMenuClick }) => {
   const { user } = useAuth();
-  
+  const { theme, toggleTheme } = useTheme();
+
   return (
-    <header className="fixed top-0 left-0 right-0 bg-[#051027]/80 backdrop-blur-md h-16 flex items-center justify-between px-4 md:px-6 z-40 border-b border-white/10">
+    <header className="fixed top-0 left-0 right-0 bg-[var(--color-background)]/80 backdrop-blur-md h-16 flex items-center justify-between px-4 md:px-6 z-40 border-b border-[var(--border-color)] shadow-sm">
       <div className="flex items-center gap-4">
         <button onClick={onMenuClick} className="md:hidden text-2xl">
           <FiMenu />
@@ -33,9 +39,16 @@ const Header: React.FC<{ onMenuClick: () => void }> = ({ onMenuClick }) => {
         <img src="/logo.svg" alt="Logo" className="h-8 hidden sm:block" />
       </div>
       <div className="flex items-center gap-4">
-        <button className="relative text-2xl text-gray-300 hover:text-white transition-colors">
+        <button className="relative text-2xl text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors">
           <FiBell />
           <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-[var(--color-primary-accent)]"></span>
+        </button>
+        <button
+          onClick={toggleTheme}
+          className="text-2xl text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors p-2"
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        >
+          {theme === 'dark' ? <FiSun /> : <FiMoon />}
         </button>
         <div className="flex items-center gap-2">
           <img src={user?.avatarUrl || `https://api.dicebear.com/8.x/initials/svg?seed=${user?.name}`} alt="avatar" className="h-8 w-8 rounded-full" />
@@ -60,8 +73,7 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, o
       to={item.path}
       onClick={onClose}
       className={({ isActive }) =>
-        `flex items-center gap-4 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-all ${
-          isActive ? 'bg-white/10 text-white font-semibold' : ''
+        `flex items-center gap-4 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-[var(--color-text-primary)] transition-all ${isActive ? 'bg-white/10 text-[var(--color-text-primary)] font-semibold' : ''
         }`
       }
     >
@@ -95,7 +107,7 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, o
               animate="open"
               exit="closed"
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="fixed top-0 left-0 bottom-0 w-64 bg-[#081432] p-4 z-50 flex flex-col md:hidden"
+              className="fixed top-0 left-0 bottom-0 w-64 bg-[var(--color-background-light)] p-4 z-50 flex flex-col md:hidden"
             >
               <div className="flex justify-between items-center mb-8">
                 <img src="/logo.svg" alt="Logo" className="h-8" />
@@ -103,13 +115,13 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, o
               </div>
               <nav className="flex flex-col gap-2 flex-grow">
                 {navItems.map(item => <NavLinkItem key={item.path} item={item} />)}
-                 <NavLink
-                    to="/groups/all/expenses/new"
-                    onClick={onClose}
-                    className="mt-4 flex items-center justify-center gap-3 px-4 py-3 rounded-lg text-white bg-gradient-to-r from-[var(--color-primary-accent)] to-[var(--color-secondary-accent)] hover:scale-105 transition-transform"
+                <NavLink
+                  to="/groups/all/expenses/new"
+                  onClick={onClose}
+                  className="mt-4 flex items-center justify-center gap-3 px-4 py-3 rounded-lg text-white bg-gradient-to-r from-[var(--color-primary-accent)] to-[var(--color-secondary-accent)] hover:scale-105 transition-transform"
                 >
-                    <FiPlusCircle className="text-xl" />
-                    <span className="font-bold">Add Expense</span>
+                  <FiPlusCircle className="text-xl" />
+                  <span className="font-bold">Add Expense</span>
                 </NavLink>
               </nav>
               <button onClick={handleLogout} className="flex items-center gap-4 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-all">
@@ -120,9 +132,9 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, o
           </>
         )}
       </AnimatePresence>
-      
+
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 bg-[#081432] p-4 fixed h-full border-r border-white/10">
+      <aside className="hidden md:flex flex-col w-64 bg-[var(--color-background-light)] p-4 fixed h-full border-r border-[var(--border-color)]">
         <div className="mb-10 mt-2">
           <img src="/logo.svg" alt="Logo" className="h-8" />
         </div>
@@ -130,13 +142,13 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, o
           {navItems.map(item => <NavLinkItem key={item.path} item={item} />)}
         </nav>
         <div className="mb-4">
-             <NavLink
-                to="/groups/all/expenses/new"
-                className="flex items-center justify-center gap-3 px-4 py-3 rounded-lg text-white bg-gradient-to-r from-[var(--color-primary-accent)] to-[var(--color-secondary-accent)] hover:scale-105 transition-transform"
-            >
-                <FiPlusCircle className="text-xl" />
-                <span className="font-bold">Add Expense</span>
-            </NavLink>
+          <NavLink
+            to="/groups/all/expenses/new"
+            className="flex items-center justify-center gap-3 px-4 py-3 rounded-lg text-white bg-gradient-to-r from-[var(--color-primary-accent)] to-[var(--color-secondary-accent)] hover:scale-105 transition-transform"
+          >
+            <FiPlusCircle className="text-xl" />
+            <span className="font-bold">Add Expense</span>
+          </NavLink>
         </div>
         <button onClick={handleLogout} className="flex items-center gap-4 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-all">
           <FiLogOut className="text-xl" />
@@ -150,9 +162,10 @@ const Sidebar: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, o
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const { theme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-[#051027] text-white">
+    <div className="min-h-screen text-[var(--color-text-primary)] bg-[var(--color-background)]">
       <CosmicBackground />
       <div className="relative z-10 flex">
         <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />

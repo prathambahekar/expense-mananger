@@ -1,71 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shared Expense Manager</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-toastify@11.0.5/dist/ReactToastify.min.css" />
-    <style>
-      :root {
-        --color-background: #051027;
-        --color-primary-accent: #00FFD5;
-        --color-secondary-accent: #9B6CFF;
-        --color-danger: #FF6B6B;
-        --color-success: #4CAF50;
-        --color-text-primary: #FFFFFF;
-        --color-text-secondary: #a0aec0;
-        --font-body: 'Inter', sans-serif;
-        --font-heading: 'Space Grotesk', sans-serif;
-      }
-      body {
-        background-color: var(--color-background);
-        color: var(--color-text-primary);
-        font-family: var(--font-body);
-        overflow-x: hidden;
-      }
-      .cosmic-background {
-        background-image: url('/stars.svg');
-        background-repeat: repeat;
-        background-position: 0 0;
-        animation: move-stars 120s linear infinite;
-      }
-      @keyframes move-stars {
-        from { background-position: 0 0; }
-        to { background-position: -10000px 5000px; }
-      }
-      .gradient-text {
-        background: linear-gradient(90deg, var(--color-primary-accent), var(--color-secondary-accent));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-fill-color: transparent;
-      }
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shared Expense Manager</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-toastify@11.0.5/dist/ReactToastify.min.css" />
+  <style>
+    :root[data-theme="dark"] {
+      --color-background: #051027;
+      --color-background-light: #081432;
+      --color-background-lighter: #0b193d;
+      --color-primary-accent: #00FFD5;
+      --color-secondary-accent: #9B6CFF;
+      --color-danger: #FF6B6B;
+      --color-success: #4CAF50;
+      --color-text-primary: #FFFFFF;
+      --color-text-secondary: #a0aec0;
+      --font-body: 'Inter', sans-serif;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --card-bg: rgba(255, 255, 255, 0.05);
+    }
+
+    :root[data-theme="light"] {
+      --color-background: #f8fafc;
+      --color-background-light: #ffffff;
+      --color-background-lighter: #f1f5f9;
+      --color-primary-accent: #00c4a3;
+      --color-secondary-accent: #8b5cf6;
+      --color-danger: #ef4444;
+      --color-success: #22c55e;
+      --color-text-primary: #1e293b;
+      --color-text-secondary: #64748b;
+      --font-body: 'Inter', sans-serif;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --border-color: rgba(0, 0, 0, 0.1);
+      --card-bg: rgba(255, 255, 255, 1);
+    }
+
+    body {
+      background-color: var(--color-background);
+      color: var(--color-text-primary);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Light Mode Overrides */
+    [data-theme="light"] {
       .Toastify__toast {
-        background-color: #1a202c !important;
-        color: white !important;
-        border-radius: 12px !important;
-        border: 1px solid #4a5568 !important;
+        background-color: var(--color-background-light) !important;
+        color: var(--color-text-primary) !important;
+        border-color: var(--border-color) !important;
       }
-      .Toastify__close-button {
-        color: white !important;
+
+      .cosmic-background {
+        opacity: 0.1;
       }
-      .Toastify__progress-bar {
-        background: linear-gradient(90deg, var(--color-primary-accent), var(--color-secondary-accent)) !important;
-      }
-      /* Fix for dropdown text visibility */
-      select {
-        color: var(--color-text-primary);
-      }
+
       select option {
-        background: #0b193d; /* Match modal background for consistency */
+        background: var(--color-background-light);
         color: var(--color-text-primary);
       }
-    </style>
+
+      .hover\:bg-white\/10:hover {
+        background-color: var(--color-background-lighter);
+      }
+
+      nav a.active {
+        background-color: var(--color-background-lighter) !important;
+      }
+
+      .text-gray-300 {
+        color: var(--color-text-secondary);
+      }
+
+      .text-gray-400 {
+        color: var(--color-text-secondary);
+      }
+
+      .bg-white\/5 {
+        background-color: var(--card-bg);
+      }
+
+      .hover\:bg-white\/20:hover {
+        background-color: var(--color-background-lighter);
+      }
+
+      tbody tr:hover {
+        background-color: var(--color-background-lighter) !important;
+      }
+
+      .border-white\/10 {
+        border-color: var(--border-color);
+      }
+
+      .gradient-text {
+        opacity: 0.9;
+      }
+    }
+
+    .cosmic-background {
+      background-image: url('/stars.svg');
+      background-repeat: repeat;
+      background-position: 0 0;
+      animation: move-stars 120s linear infinite;
+    }
+
+    @keyframes move-stars {
+      from {
+        background-position: 0 0;
+      }
+
+      to {
+        background-position: -10000px 5000px;
+      }
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--color-primary-accent), var(--color-secondary-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    .Toastify__toast {
+      background-color: #1a202c !important;
+      color: white !important;
+      border-radius: 12px !important;
+      border: 1px solid #4a5568 !important;
+    }
+
+    .Toastify__close-button {
+      color: white !important;
+    }
+
+    .Toastify__progress-bar {
+      background: linear-gradient(90deg, var(--color-primary-accent), var(--color-secondary-accent)) !important;
+    }
+
+    /* Fix for dropdown text visibility */
+    select {
+      color: var(--color-text-primary);
+    }
+
+    select option {
+      background: #0b193d;
+      /* Match modal background for consistency */
+      color: var(--color-text-primary);
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -87,10 +180,12 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
 </html>

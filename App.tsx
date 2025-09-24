@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
 import AuthPage from './pages/AuthPage';
 import DashboardPage from './pages/DashboardPage';
 import GroupsPage from './pages/GroupsPage';
@@ -28,63 +29,65 @@ const App: React.FC = () => {
 
   return (
     <SettingsProvider>
-      <HashRouter>
-        <Routes>
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <ThemeProvider>
+        <HashRouter>
+          <Routes>
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Layout><DashboardPage /></Layout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/groups"
-            element={
-              <ProtectedRoute>
-                <Layout><GroupsPage /></Layout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/groups/:groupId/expenses/new"
-            element={
-              <ProtectedRoute>
-                <Layout><ExpensePage /></Layout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/expenses/:expenseId/edit"
-            element={
-              <ProtectedRoute>
-                <Layout><ExpensePage /></Layout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settlements"
-            element={
-              <ProtectedRoute>
-                <Layout><SettlementsPage /></Layout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <Layout><ProfilePage /></Layout>
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Layout><DashboardPage /></Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/groups"
+              element={
+                <ProtectedRoute>
+                  <Layout><GroupsPage /></Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/groups/:groupId/expenses/new"
+              element={
+                <ProtectedRoute>
+                  <Layout><ExpensePage /></Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/expenses/:expenseId/edit"
+              element={
+                <ProtectedRoute>
+                  <Layout><ExpensePage /></Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settlements"
+              element={
+                <ProtectedRoute>
+                  <Layout><SettlementsPage /></Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Layout><ProfilePage /></Layout>
+                </ProtectedRoute>
+              }
+            />
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </HashRouter>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </HashRouter>
+      </ThemeProvider>
     </SettingsProvider>
   );
 };
