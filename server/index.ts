@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import { register, login } from "./routes/auth";
+import { getDashboard } from "./routes/dashboard";
 
 export function createServer() {
   const app = express();
@@ -20,9 +22,9 @@ export function createServer() {
   app.get("/api/demo", handleDemo);
 
   // Mock auth & dashboard endpoints for frontend development
-  app.post("/api/auth/register", (await import("./routes/auth")).register);
-  app.post("/api/auth/login", (await import("./routes/auth")).login);
-  app.get("/api/dashboard/:userId", (await import("./routes/dashboard")).getDashboard);
+  app.post("/api/auth/register", register);
+  app.post("/api/auth/login", login);
+  app.get("/api/dashboard/:userId", getDashboard);
 
   return app;
 }
